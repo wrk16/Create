@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create</title>
+    <link rel="shortcut icon" href="favicon.jpg" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#"><h1 style="color: rgb(73, 72, 72);">Create</h1></a> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#" style="color: black;">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#" style="color: black; ">Features</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#" style="color: black;">Blog</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link disabled" aria-disabled="true" style="color: rgb(90, 88, 88);">Disabled</a>
+                  </li>
+                </ul>
+                
+              </div>
+              <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+              </form>
+            </div>
+          </nav>
+    </header>
+
+<main>
+    <div class="container mt-5 col-6">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Course Name" aria-label="Recipient's username" aria-describedby="button-addon2">
+        <button id="add_btn" class="btn btn-outline-success" type="button" id="button-addon2">Add</button>
+      </div>
+    
+    <ul class="list-group" id="parentList">
+        <li class="list-group-item d-flex justify-content-between">
+            <h4 class="flex-grow-1">Ch 1 </h4> 
+            <button class="btn btn-success mx-3" onclick="editChpt(this)">Edit</button> 
+            <button class="btn btn-danger" onclick="removeChpt(this)">Remove</button> 
+
+        </li>
+      </ul>
+    </div>
+</main>
+
+<script>
+let addBtn= document.getElementById("add_btn")
+addBtn.addEventListener("click", addChpt)
+let parentList=document.getElementById("parentList")
+
+function addChpt(e){
+    if(parentList.children[0].className=="emptyMsg"){
+        parentList.children[0].remove()
+    }
+    let currentBtn=e.currentTarget;
+    let currentInput=currentBtn. previousElementSibling
+    let chptName=currentInput.value;
+
+    let newLi=document.createElement("li")
+    newLi.className="list-group-item d-flex justify-content-between"
+    newLi.innerHTML=`<h4 class="flex-grow-1">${chptName} </h4> 
+            <button class="btn btn-success mx-3">Edit</button> 
+            <button class="btn btn-danger" onclick="removeChpt(this)">Remove</button> `
+
+    parentList.appendChild(newLi)
+
+}
+
+function removeChpt(currElement){
+    currElement.parentElement.remove()
+    let parentList=document.getElementById("parentList")
+if(parentList.children.length<=0){
+    let parentList=document.getElementById("parentList")
+    let newEmptymsg=document.createElement("h3")
+    newEmptymsg.classList.add("emptyMsg")
+    newEmptymsg.textContent="No Chapters Added"
+    parentList.appendChild(newEmptymsg)
+}
+}
+
+function editChpt(currElement){
+    if(currElement.textContent=="Update"){
+        currElement.textContent="Edit"
+        let currChapterName=currElement.previousElementSibling.value
+       let currHeading=document.createElement("h3")
+currHeading.className="flex-grow-1"
+currHeading.textContent=currChapterName
+currElement.parentElement.replaceChild(currHeading,currElement.previousElementSibling)
+    }else{
+    currElement.textContent="Update"
+let currChapterName=currElement.previousElementSibling.textContent
+currInput=document.createElement("input")
+currInput.type="text"
+currInput.placeholder="Chapter Name"
+currInput.className="form-control"
+currInput.value=currChapterName
+
+currElement.parentElement.replaceChild(currInput,currElement.previousElementSibling)
+}}
+</script>
+</body>
+</html>
